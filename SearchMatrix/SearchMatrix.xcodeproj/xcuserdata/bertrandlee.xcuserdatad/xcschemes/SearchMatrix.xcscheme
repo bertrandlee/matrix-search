@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9D9747F420D91CBC00B2AB33"
-               BuildableName = "GenerateMatrix"
-               BlueprintName = "GenerateMatrix"
-               ReferencedContainer = "container:GenerateMatrix.xcodeproj">
+               BlueprintIdentifier = "9D77D14520DBF51700E0F3AC"
+               BuildableName = "SearchMatrix"
+               BlueprintName = "SearchMatrix"
+               ReferencedContainer = "container:SearchMatrix.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9D9747F420D91CBC00B2AB33"
-            BuildableName = "GenerateMatrix"
-            BlueprintName = "GenerateMatrix"
-            ReferencedContainer = "container:GenerateMatrix.xcodeproj">
+            BlueprintIdentifier = "9D77D14520DBF51700E0F3AC"
+            BuildableName = "SearchMatrix"
+            BlueprintName = "SearchMatrix"
+            ReferencedContainer = "container:SearchMatrix.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -55,18 +55,12 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9D9747F420D91CBC00B2AB33"
-            BuildableName = "GenerateMatrix"
-            BlueprintName = "GenerateMatrix"
-            ReferencedContainer = "container:GenerateMatrix.xcodeproj">
+            BlueprintIdentifier = "9D77D14520DBF51700E0F3AC"
+            BuildableName = "SearchMatrix"
+            BlueprintName = "SearchMatrix"
+            ReferencedContainer = "container:SearchMatrix.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <CommandLineArguments>
-         <CommandLineArgument
-            argument = " /Users/bertrandlee/src/Matrix/GenerateMatrix/matrix.dat  10000 10000"
-            isEnabled = "YES">
-         </CommandLineArgument>
-      </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -80,10 +74,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9D9747F420D91CBC00B2AB33"
-            BuildableName = "GenerateMatrix"
-            BlueprintName = "GenerateMatrix"
-            ReferencedContainer = "container:GenerateMatrix.xcodeproj">
+            BlueprintIdentifier = "9D77D14520DBF51700E0F3AC"
+            BuildableName = "SearchMatrix"
+            BlueprintName = "SearchMatrix"
+            ReferencedContainer = "container:SearchMatrix.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
