@@ -61,6 +61,12 @@
             ReferencedContainer = "container:SearchMatrix.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "/Users/bertrandlee/src/MatrixSearch/matrix.dat /Users/bertrandlee/src/MatrixSearch/search.txt"
+            isEnabled = "YES">
+         </CommandLineArgument>
+      </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>

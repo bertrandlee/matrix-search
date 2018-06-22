@@ -144,3 +144,68 @@ void MyMatrix::EncryptOrDecrypt()
     }
 }
 
+void MyMatrix::ConvertToVectors()
+{
+    if (m_pMatrix == NULL || m_valCount == 0)
+    {
+        throw std::runtime_error("Cannot convert null matrix");
+    }
+    
+    m_vecMatrix.resize(m_rowCount);
+    
+    for (int i = 0; i < m_rowCount; i++)
+    {
+        m_vecMatrix[i].resize(m_colCount);
+        
+        for (int j = 0; j < m_colCount; j++)
+        {
+            m_vecMatrix[i][j] = m_pMatrix[m_colCount * i + j];
+        }
+    }
+    
+    m_sortedMatrix = m_vecMatrix;
+    
+    for (int i = 0; i < m_sortedMatrix.size(); i++)
+    {
+        std::sort(m_sortedMatrix[i].begin(), m_sortedMatrix[i].end());
+    }
+}
+
+void MyMatrix::PrintVectors()
+{
+    if (m_vecMatrix.size() == 0)
+    {
+        std::cout << "Empty vector matrix" << std::endl;
+    }
+    else
+    {
+        std::cout << "Vector matrix:" << std::endl;
+        std::cout << m_vecMatrix.size() << std::endl;
+        std::cout << m_vecMatrix[0].size() << std::endl;
+        
+        for (int i = 0; i < m_vecMatrix.size(); i++)
+        {
+            for (int j = 0; j < m_vecMatrix[i].size(); j++)
+            {
+                std::cout << m_vecMatrix[i][j] << " ";
+            }
+            
+            std::cout << std::endl;
+        }
+        
+        std::cout << "Sorted matrix:" << std::endl;
+        std::cout << m_sortedMatrix.size() << std::endl;
+        std::cout << m_sortedMatrix[0].size() << std::endl;
+        
+        for (int i = 0; i < m_sortedMatrix.size(); i++)
+        {
+            for (int j = 0; j < m_sortedMatrix[i].size(); j++)
+            {
+                std::cout << m_sortedMatrix[i][j] << " ";
+            }
+            
+            std::cout << std::endl;
+        }
+
+    }
+}

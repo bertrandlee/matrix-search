@@ -21,4 +21,4 @@ srchmatrix: $(SEARCHMATRIX_OBJECTS)
 	$(CC) $(SEARCHMATRIX_OBJECTS) -o srchmatrix
 
 clean:
-	rm -f *.o genmatrix srchmatrix
+	rm -f *.o genmatrix srchmatrix SearchMatrix.txt
