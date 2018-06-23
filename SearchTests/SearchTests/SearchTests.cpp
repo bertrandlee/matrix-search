@@ -143,3 +143,54 @@ TEST_CASE( "SearchSequenceNaive Large Match", "[SearchSequenceNaive]" ) {
     REQUIRE(result == expected);
 }
 
+TEST_CASE( "SearchSequenceNaive Stress NoMatch", "[SearchSequenceNaive]" ) {
+    std::vector<std::vector<int> > matrix;
+    SearchSequenceNaive search;
+    std::vector<int> sequence = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,19};
+    std::vector<int> expected = {};
+    std::vector<int> result;
+    
+    CreateLargeMatrix(matrix, 20);
+    search.SearchMatrix(matrix, sequence, result, true);
+    REQUIRE(result == expected);
+}
+
+TEST_CASE( "SearchSequenceNaive Stress Match", "[SearchSequenceNaive]" ) {
+    std::vector<std::vector<int> > matrix;
+    SearchSequenceNaive search;
+    std::vector<int> sequence = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,19};
+    std::vector<int> expected = {0,1,MAX_DIM-1};
+    std::vector<int> result;
+    
+    CreateLargeMatrix(matrix, 20);
+    matrix[0][18] = 19;
+    matrix[1][18] = 19;
+    matrix[MAX_DIM-1][18] = 19;
+    search.SearchMatrix(matrix, sequence, result, true);
+    REQUIRE(result == expected);
+}
+
+TEST_CASE( "SearchSequenceNaive Stress Plus NoMatch", "[SearchSequenceNaive]" ) {
+    std::vector<std::vector<int> > matrix;
+    SearchSequenceNaive search;
+    std::vector<int> sequence = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1};
+    std::vector<int> expected = {};
+    std::vector<int> result;
+    
+    CreateLargeMatrix(matrix, 1);
+    search.SearchMatrix(matrix, sequence, result, true);
+    REQUIRE(result == expected);
+}
+
+TEST_CASE( "SearchSequenceNaive Stress Plus Match", "[SearchSequenceNaive]" ) {
+    std::vector<std::vector<int> > matrix;
+    SearchSequenceNaive search;
+    std::vector<int> sequence = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1};
+    std::vector<int> expected = {2};
+    std::vector<int> result;
+    
+    CreateLargeMatrix(matrix, 1);
+    matrix[2][19] = 1;
+    search.SearchMatrix(matrix, sequence, result, true);
+    REQUIRE(result == expected);
+}
