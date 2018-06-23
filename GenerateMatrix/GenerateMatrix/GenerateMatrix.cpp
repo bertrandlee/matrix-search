@@ -6,6 +6,9 @@
 //  Copyright © 2018 Bertrand Lee. All rights reserved.
 //
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -29,7 +32,7 @@ int main(int argc, const char * argv[]) {
     char *fileName;
     int rowCount, colCount;
     MyMatrix matrix;
-    
+        
     if (argc < 4)
     {
         Usage(argv[0]);

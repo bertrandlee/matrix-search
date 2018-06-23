@@ -36,7 +36,7 @@ private:
     int *m_pMatrix;
     int m_rowCount;
     int m_colCount;
-    unsigned int m_valCount;
+    long long m_valCount;
     std::vector<std::vector<int> > m_vecMatrix;
     std::vector<std::vector<int> > m_sortedMatrix;
 };

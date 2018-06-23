@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -32,8 +35,8 @@ void MyMatrix::SetDimensions(int rowCount, int colCount)
     
     m_rowCount = rowCount;
     m_colCount = colCount;
-    m_valCount = rowCount * colCount;
-    
+    m_valCount = (long long) rowCount * (long long) colCount;
+        
     if (m_valCount / m_rowCount != m_colCount)
     {
         throw std::invalid_argument("Matrix element count too large");

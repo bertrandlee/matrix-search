@@ -6,13 +6,14 @@
 //  Copyright © 2018 Bertrand Lee. All rights reserved.
 //
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <iostream>
 #include <sstream>
 #include <fstream>
 #include <vector>
 #include "MyMatrix.h"
-
-using namespace std;
 
 #define E_INVALIDARG 1
 
@@ -22,18 +23,18 @@ public:
     
     void ParseConsole()
     {
-        cout << "Enter one of the following commands:" << endl;
-        cout << "<searchSequence | searchUnordered | searchBestMatch> <number sequence>" << endl;
-        cout << "q (to quit)" << endl;
-        cout << "Eg: searchSequence 1 2 3" << endl;
+        std::cout << "Enter one of the following commands:" << std::endl;
+        std::cout << "<searchSequence | searchUnordered | searchBestMatch> <number sequence>" << std::endl;
+        std::cout << "q (to quit)" << std::endl;
+        std::cout << "Eg: searchSequence 1 2 3" << std::endl;
         
-        string strCmdLine;
+        std::string strCmdLine;
         
         while (true)
         {
-            cout << "> ";
+            std::cout << "> ";
             
-            getline(cin, strCmdLine);
+            getline(std::cin, strCmdLine);
             
             if (strCmdLine == "q")
             {
@@ -45,7 +46,7 @@ public:
                 {
                     ParseCommand(strCmdLine);
                 }
-                catch (invalid_argument e)
+                catch (std::invalid_argument e)
                 {
                     printf("ERROR: %s\n", e.what());
                 }
@@ -53,10 +54,10 @@ public:
         }
     }
     
-    void ParseCommandFile(string strCmdFile)
+    void ParseCommandFile(std::string strCmdFile)
     {
-        ifstream fstream;
-        string strCmdLine;
+        std::ifstream fstream;
+        std::string strCmdLine;
         
         fstream.open(strCmdFile);
         
@@ -66,7 +67,7 @@ public:
             
             if (strCmdLine.length() > 0)
             {
-                cout << strCmdLine << endl;
+                std::cout << strCmdLine << std::endl;
                 ParseCommand(strCmdLine);
             }
         }
@@ -77,19 +78,19 @@ public:
     
 private:
     
-    void PrintParsedCommand(string& strCmd, vector<int>& values)
+    void PrintParsedCommand(std::string& strCmd, std::vector<int>& values)
     {
-        cout << "Parsed: " << strCmd << " ";
+        std::cout << "Parsed: " << strCmd << " ";
         
         for (int i = 0; i < values.size(); i++)
         {
-            cout << values[i] << " ";
+            std::cout << values[i] << " ";
         }
         
-        cout << endl;
+        std::cout << std::endl;
     }
     
-    void ParseCommandValues(string& strCmd, istringstream& stream, vector<int>& values)
+    void ParseCommandValues(std::string& strCmd, std::istringstream& stream, std::vector<int>& values)
     {
         int val;
         
@@ -113,22 +114,22 @@ private:
         
         if (values.size() == 0)
         {
-            throw invalid_argument("No number sequence specified");
+            throw std::invalid_argument("No number sequence specified");
         }
     }
     
-    void ParseCommand(string& strCmdLine)
+    void ParseCommand(std::string& strCmdLine)
     {
-        istringstream stream(strCmdLine);
-        string strCmd;
-        vector<int> values;
+        std::istringstream stream(strCmdLine);
+        std::string strCmd;
+        std::vector<int> values;
         
         getline(stream, strCmd, ' ');
         
         if (stream.eof())
         {
-            string errMsg = "Invalid command: \"" + strCmd + "\"";
-            throw invalid_argument(errMsg);
+            std::string errMsg = "Invalid command: \"" + strCmd + "\"";
+            throw std::invalid_argument(errMsg);
         }
         
         if (strCmd == "searchSequence")
@@ -148,8 +149,8 @@ private:
         }
         else
         {
-            string errMsg = "Invalid command: \"" + strCmd + "\"";
-            throw invalid_argument(errMsg);
+            std::string errMsg = "Invalid command: \"" + strCmd + "\"";
+            throw std::invalid_argument(errMsg);
         }
     }
 };
@@ -181,9 +182,11 @@ int main(int argc, const char * argv[]) {
         printf("Reading bin file: %s\n", fileName);
         matrix.ReadFromBinFile(fileName);
         
-        // Test vector matrix
+        // Test std::vector matrix
+        printf("Converting vectors\n");
         matrix.ConvertToVectors();
-        matrix.PrintVectors();
+        printf("Converted vectors\n");
+        //matrix.PrintVectors();
         
         if (argc == 2)
         {
