@@ -63,6 +63,7 @@ void MyMatrix::ReadFromBinFile(char *fileName)
     EncryptOrDecrypt();
 #endif
     
+    ConvertToVectors();
 }
 
 void MyMatrix::WriteToBinFile(char *fileName)
@@ -114,6 +115,8 @@ void MyMatrix::CreateWithRandomValues()
             m_pMatrix[m_colCount * i + j] = rand();
         }
     }
+    
+    ConvertToVectors();
 }
 
 
@@ -138,6 +141,8 @@ void MyMatrix::CreateWithSpecifiedValues(std::string values)
             ss.ignore();
         }
     }
+    
+    ConvertToVectors();
 }
 
 void MyMatrix::EncryptOrDecrypt()

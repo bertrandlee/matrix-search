@@ -14,12 +14,22 @@
 #include <fstream>
 #include <vector>
 #include "MyMatrix.h"
+#include "Search.h"
 
 #define E_INVALIDARG 1
+
 
 class MyParser
 {
 public:
+    MyParser() {};
+    virtual ~MyParser() {};
+    
+    void ReadMatrixFile(char* fileName)
+    {
+        printf("Reading bin file: %s\n", fileName);
+        m_matrix.ReadFromBinFile(fileName);
+    }
     
     void ParseConsole()
     {
@@ -78,6 +88,23 @@ public:
     
 private:
     
+    void PrintResult(std::vector<int>& result)
+    {
+        std::cout << "Results(s):\n";
+        
+        if (result.size() == 0)
+        {
+            std::cout << "None\n";
+        }
+        else
+        {
+            for (int i = 0; i < result.size(); i++)
+            {
+                std::cout << result[i] << std::endl;
+            }
+        }
+    }
+    
     void PrintParsedCommand(std::string& strCmd, std::vector<int>& values)
     {
         std::cout << "Parsed: " << strCmd << " ";
@@ -122,7 +149,7 @@ private:
     {
         std::istringstream stream(strCmdLine);
         std::string strCmd;
-        std::vector<int> values;
+        std::vector<int> sequence, result;
         
         getline(stream, strCmd, ' ');
         
@@ -134,18 +161,22 @@ private:
         
         if (strCmd == "searchSequence")
         {
-            ParseCommandValues(strCmd, stream, values);
-            PrintParsedCommand(strCmd, values);
+            SearchSequenceNaive search;
+            
+            ParseCommandValues(strCmd, stream, sequence);
+            //PrintParsedCommand(strCmd, sequence);
+            search.SearchMatrix(m_matrix.GetVectorMatrix(), sequence, result);
+            PrintResult(result);
         }
         else if (strCmd == "searchUnordered")
         {
-            ParseCommandValues(strCmd, stream, values);
-            PrintParsedCommand(strCmd, values);
+            ParseCommandValues(strCmd, stream, sequence);
+            PrintParsedCommand(strCmd, sequence);
         }
         else if (strCmd == "searchBestMatch")
         {
-            ParseCommandValues(strCmd, stream, values);
-            PrintParsedCommand(strCmd, values);
+            ParseCommandValues(strCmd, stream, sequence);
+            PrintParsedCommand(strCmd, sequence);
         }
         else
         {
@@ -153,6 +184,9 @@ private:
             throw std::invalid_argument(errMsg);
         }
     }
+    
+private:
+    MyMatrix m_matrix;
 };
 
 void Usage(const char *cmd)
@@ -165,7 +199,6 @@ void Usage(const char *cmd)
 
 int main(int argc, const char * argv[]) {
     int ret = 0;
-    MyMatrix matrix;
     MyParser parser;
     
     if (argc < 2)
@@ -179,14 +212,7 @@ int main(int argc, const char * argv[]) {
     {
         // Read from bin file
         char *fileName = (char *) argv[1];
-        printf("Reading bin file: %s\n", fileName);
-        matrix.ReadFromBinFile(fileName);
-        
-        // Test std::vector matrix
-        printf("Converting vectors\n");
-        matrix.ConvertToVectors();
-        printf("Converted vectors\n");
-        //matrix.PrintVectors();
+        parser.ReadMatrixFile(fileName);
         
         if (argc == 2)
         {

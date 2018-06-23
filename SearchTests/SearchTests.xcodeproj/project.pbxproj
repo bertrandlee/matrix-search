@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9D77D14A20DBF51700E0F3AC /* SearchMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D77D14920DBF51700E0F3AC /* SearchMatrix.cpp */; };
-		9D77D15220DBF64E00E0F3AC /* MyMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D77D15120DBF64E00E0F3AC /* MyMatrix.cpp */; };
-		9D77D15520DE5DE300E0F3AC /* Search.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D77D15420DE5DE300E0F3AC /* Search.cpp */; };
+		9D77D16320DE658E00E0F3AC /* SearchTests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D77D16220DE658E00E0F3AC /* SearchTests.cpp */; };
+		9D77D16C20DE77F500E0F3AC /* Search.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D77D16B20DE77F500E0F3AC /* Search.cpp */; };
+		9D77D16F20DE78AE00E0F3AC /* MyMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D77D16E20DE78AE00E0F3AC /* MyMatrix.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		9D77D14420DBF51700E0F3AC /* CopyFiles */ = {
+		9D77D15D20DE658E00E0F3AC /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -25,16 +25,17 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		9D77D14620DBF51700E0F3AC /* SearchMatrix */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SearchMatrix; sourceTree = BUILT_PRODUCTS_DIR; };
-		9D77D14920DBF51700E0F3AC /* SearchMatrix.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SearchMatrix.cpp; sourceTree = "<group>"; };
-		9D77D15020DBF63900E0F3AC /* MyMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyMatrix.h; path = ../../inc/MyMatrix.h; sourceTree = "<group>"; };
-		9D77D15120DBF64E00E0F3AC /* MyMatrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyMatrix.cpp; path = ../../shared/MyMatrix.cpp; sourceTree = "<group>"; };
-		9D77D15320DE5DD500E0F3AC /* Search.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Search.h; path = ../../inc/Search.h; sourceTree = "<group>"; };
-		9D77D15420DE5DE300E0F3AC /* Search.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Search.cpp; path = ../../shared/Search.cpp; sourceTree = "<group>"; };
+		9D77D15F20DE658E00E0F3AC /* SearchTests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SearchTests; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D77D16220DE658E00E0F3AC /* SearchTests.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SearchTests.cpp; sourceTree = "<group>"; };
+		9D77D16920DE65C300E0F3AC /* catch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = catch.h; path = ../../inc/catch.h; sourceTree = "<group>"; };
+		9D77D16A20DE77E500E0F3AC /* Search.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Search.h; path = ../../inc/Search.h; sourceTree = "<group>"; };
+		9D77D16B20DE77F500E0F3AC /* Search.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Search.cpp; path = ../../shared/Search.cpp; sourceTree = "<group>"; };
+		9D77D16D20DE789F00E0F3AC /* MyMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyMatrix.h; path = ../../inc/MyMatrix.h; sourceTree = "<group>"; };
+		9D77D16E20DE78AE00E0F3AC /* MyMatrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyMatrix.cpp; path = ../../shared/MyMatrix.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		9D77D14320DBF51700E0F3AC /* Frameworks */ = {
+		9D77D15C20DE658E00E0F3AC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -44,101 +45,102 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		9D77D13D20DBF51700E0F3AC = {
+		9D77D15620DE658D00E0F3AC = {
 			isa = PBXGroup;
 			children = (
-				9D77D14820DBF51700E0F3AC /* SearchMatrix */,
-				9D77D14720DBF51700E0F3AC /* Products */,
+				9D77D16120DE658E00E0F3AC /* SearchTests */,
+				9D77D16020DE658E00E0F3AC /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		9D77D14720DBF51700E0F3AC /* Products */ = {
+		9D77D16020DE658E00E0F3AC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9D77D14620DBF51700E0F3AC /* SearchMatrix */,
+				9D77D15F20DE658E00E0F3AC /* SearchTests */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		9D77D14820DBF51700E0F3AC /* SearchMatrix */ = {
+		9D77D16120DE658E00E0F3AC /* SearchTests */ = {
 			isa = PBXGroup;
 			children = (
-				9D77D15420DE5DE300E0F3AC /* Search.cpp */,
-				9D77D15320DE5DD500E0F3AC /* Search.h */,
-				9D77D15120DBF64E00E0F3AC /* MyMatrix.cpp */,
-				9D77D15020DBF63900E0F3AC /* MyMatrix.h */,
-				9D77D14920DBF51700E0F3AC /* SearchMatrix.cpp */,
+				9D77D16E20DE78AE00E0F3AC /* MyMatrix.cpp */,
+				9D77D16D20DE789F00E0F3AC /* MyMatrix.h */,
+				9D77D16B20DE77F500E0F3AC /* Search.cpp */,
+				9D77D16A20DE77E500E0F3AC /* Search.h */,
+				9D77D16920DE65C300E0F3AC /* catch.h */,
+				9D77D16220DE658E00E0F3AC /* SearchTests.cpp */,
 			);
-			path = SearchMatrix;
+			path = SearchTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		9D77D14520DBF51700E0F3AC /* SearchMatrix */ = {
+		9D77D15E20DE658E00E0F3AC /* SearchTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9D77D14D20DBF51700E0F3AC /* Build configuration list for PBXNativeTarget "SearchMatrix" */;
+			buildConfigurationList = 9D77D16620DE658E00E0F3AC /* Build configuration list for PBXNativeTarget "SearchTests" */;
 			buildPhases = (
-				9D77D14220DBF51700E0F3AC /* Sources */,
-				9D77D14320DBF51700E0F3AC /* Frameworks */,
-				9D77D14420DBF51700E0F3AC /* CopyFiles */,
+				9D77D15B20DE658E00E0F3AC /* Sources */,
+				9D77D15C20DE658E00E0F3AC /* Frameworks */,
+				9D77D15D20DE658E00E0F3AC /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = SearchMatrix;
-			productName = SearchMatrix;
-			productReference = 9D77D14620DBF51700E0F3AC /* SearchMatrix */;
+			name = SearchTests;
+			productName = SearchTests;
+			productReference = 9D77D15F20DE658E00E0F3AC /* SearchTests */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		9D77D13E20DBF51700E0F3AC /* Project object */ = {
+		9D77D15720DE658D00E0F3AC /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = "Bertrand Lee";
 				TargetAttributes = {
-					9D77D14520DBF51700E0F3AC = {
+					9D77D15E20DE658E00E0F3AC = {
 						CreatedOnToolsVersion = 8.3.3;
 						ProvisioningStyle = Automatic;
 					};
 				};
 			};
-			buildConfigurationList = 9D77D14120DBF51700E0F3AC /* Build configuration list for PBXProject "SearchMatrix" */;
+			buildConfigurationList = 9D77D15A20DE658D00E0F3AC /* Build configuration list for PBXProject "SearchTests" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = 9D77D13D20DBF51700E0F3AC;
-			productRefGroup = 9D77D14720DBF51700E0F3AC /* Products */;
+			mainGroup = 9D77D15620DE658D00E0F3AC;
+			productRefGroup = 9D77D16020DE658E00E0F3AC /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				9D77D14520DBF51700E0F3AC /* SearchMatrix */,
+				9D77D15E20DE658E00E0F3AC /* SearchTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		9D77D14220DBF51700E0F3AC /* Sources */ = {
+		9D77D15B20DE658E00E0F3AC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9D77D15220DBF64E00E0F3AC /* MyMatrix.cpp in Sources */,
-				9D77D15520DE5DE300E0F3AC /* Search.cpp in Sources */,
-				9D77D14A20DBF51700E0F3AC /* SearchMatrix.cpp in Sources */,
+				9D77D16F20DE78AE00E0F3AC /* MyMatrix.cpp in Sources */,
+				9D77D16320DE658E00E0F3AC /* SearchTests.cpp in Sources */,
+				9D77D16C20DE77F500E0F3AC /* Search.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		9D77D14B20DBF51700E0F3AC /* Debug */ = {
+		9D77D16420DE658E00E0F3AC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -186,7 +188,7 @@
 			};
 			name = Debug;
 		};
-		9D77D14C20DBF51700E0F3AC /* Release */ = {
+		9D77D16520DE658E00E0F3AC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -227,14 +229,14 @@
 			};
 			name = Release;
 		};
-		9D77D14E20DBF51700E0F3AC /* Debug */ = {
+		9D77D16720DE658E00E0F3AC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
-		9D77D14F20DBF51700E0F3AC /* Release */ = {
+		9D77D16820DE658E00E0F3AC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -244,24 +246,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9D77D14120DBF51700E0F3AC /* Build configuration list for PBXProject "SearchMatrix" */ = {
+		9D77D15A20DE658D00E0F3AC /* Build configuration list for PBXProject "SearchTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9D77D14B20DBF51700E0F3AC /* Debug */,
-				9D77D14C20DBF51700E0F3AC /* Release */,
+				9D77D16420DE658E00E0F3AC /* Debug */,
+				9D77D16520DE658E00E0F3AC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9D77D14D20DBF51700E0F3AC /* Build configuration list for PBXNativeTarget "SearchMatrix" */ = {
+		9D77D16620DE658E00E0F3AC /* Build configuration list for PBXNativeTarget "SearchTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9D77D14E20DBF51700E0F3AC /* Debug */,
-				9D77D14F20DBF51700E0F3AC /* Release */,
+				9D77D16720DE658E00E0F3AC /* Debug */,
+				9D77D16820DE658E00E0F3AC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 9D77D13E20DBF51700E0F3AC /* Project object */;
+	rootObject = 9D77D15720DE658D00E0F3AC /* Project object */;
 }

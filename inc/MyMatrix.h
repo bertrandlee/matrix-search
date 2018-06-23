@@ -15,7 +15,6 @@ public:
     void WriteToTextFile(char *fileName);
     void CreateWithRandomValues();
     void CreateWithSpecifiedValues(std::string values);
-    void ConvertToVectors();
     void PrintVectors();
     
     inline std::vector<std::vector<int> >& GetVectorMatrix()
@@ -32,6 +31,7 @@ public:
 private:
     void EncryptOrDecrypt();
     void CreateSortedMatrix();
+    void ConvertToVectors();
     
     int *m_pMatrix;
     int m_rowCount;
