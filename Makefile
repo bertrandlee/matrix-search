@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -Wall -I ./inc
+CFLAGS = -Wall -Wno-sign-compare -I ./inc
 GENMATRIX_OBJECTS = GenerateMatrix.o MyMatrix.o
 SEARCHMATRIX_OBJECTS = SearchMatrix.o MyMatrix.o
 
