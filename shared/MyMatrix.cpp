@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <algorithm>
 #include "MyMatrix.h"
 
 #define XOR_MASK 0xffffffff

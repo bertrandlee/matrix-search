@@ -59,7 +59,7 @@ public:
         std::ifstream fstream;
         std::string strCmdLine;
         
-        fstream.open(strCmdFile);
+        fstream.open(strCmdFile.c_str());
         
         while (!fstream.eof())
         {
