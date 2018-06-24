@@ -161,7 +161,7 @@ private:
         
         if (strCmd == "searchSequence")
         {
-            SearchSequenceNaive search;
+            SearchSequenceOptimized search;
             
             ParseCommandValues(strCmd, stream, sequence);
             //PrintParsedCommand(strCmd, sequence);

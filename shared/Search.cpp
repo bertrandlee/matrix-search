@@ -3,8 +3,8 @@
 #include <unistd.h>
 #include "Search.h"
 
-
-void SearchBase::SearchMatrix(std::vector<std::vector<int> >& matrix, std::vector<int>& sequence, std::vector<int>& result, bool logtime)
+// SearchBase methods
+void SearchBase::SearchMatrix(std::vector<std::vector<int> >& matrix, std::vector<int>& sequence, std::vector<int>& result, bool logtime, const char *caller)
 {
     if (matrix.size() == 0 || matrix[0].size() == 0)
     {
@@ -20,6 +20,8 @@ void SearchBase::SearchMatrix(std::vector<std::vector<int> >& matrix, std::vecto
     
     clock_t time_a = clock();
     
+    Preprocess(sequence);
+    
     for (int i = 0; i < matrix.size(); i++)
     {
         int res = SearchRow(matrix[i], sequence);
@@ -34,12 +36,12 @@ void SearchBase::SearchMatrix(std::vector<std::vector<int> >& matrix, std::vecto
     
     if (logtime)
     {
-        std::cout << "Matrix search time = " << time_b - time_a << " us" << std::endl;
+        std::cout << caller << ": matrix search time = " << (time_b - time_a) / 1000 << " ms" << std::endl;
     }
 
 }
 
-
+// SearchSequenceNaive methods
 int SearchSequenceNaive::SearchRow(std::vector<int>& row, std::vector<int>& sequence)
 {
     int rowSize = (int) row.size();
@@ -68,3 +70,68 @@ int SearchSequenceNaive::SearchRow(std::vector<int>& row, std::vector<int>& sequ
     
     return ret;
 }
+
+// SearchSequenceOptimized methods
+
+// Build KMP LPS array
+void SearchSequenceOptimized::Preprocess(std::vector<int>& sequence)
+{
+    int seqSize = (int) sequence.size(), k;
+    
+    m_vectLPS.resize(seqSize);
+    m_vectLPS[0] = -1;
+    
+    for (int i = 1; i < seqSize; i++)
+    {
+        k = m_vectLPS[i - 1];
+        
+        while (k >= 0)
+        {
+            if (sequence[k] == sequence[i - 1])
+            {
+                break;
+            }
+            else
+            {
+                k = m_vectLPS[k];
+            }
+        }
+        
+        m_vectLPS[i] = k + 1;
+    }
+}
+
+// Use KMP search algorithm
+int SearchSequenceOptimized::SearchRow(std::vector<int>& row, std::vector<int>& sequence)
+{
+    int seqSize = (int) sequence.size();
+    int rowSize = (int) row.size();
+    int i = 0; // row index
+    int k = 0; // sequence index
+    
+    while (i < rowSize)
+    {
+        if (k == -1)
+        {
+            i++;
+            k = 0;
+        }
+        else if (row[i] == sequence[k])
+        {
+            i++;
+            k++;
+            
+            if (k == seqSize)
+            {
+                return 0;
+            }
+        }
+        else
+        {
+            k = m_vectLPS[k];
+        }
+    }
+    
+    return -1;
+}
+
