@@ -170,8 +170,12 @@ private:
         }
         else if (strCmd == "searchUnordered")
         {
+            SearchUnorderedOptimized search(m_matrix.GetMap());
+            
             ParseCommandValues(strCmd, stream, sequence);
-            PrintParsedCommand(strCmd, sequence);
+            //PrintParsedCommand(strCmd, sequence);
+            search.SearchMatrix(m_matrix.GetVectorMatrix(), sequence, result);
+            PrintResult(result);
         }
         else if (strCmd == "searchBestMatch")
         {

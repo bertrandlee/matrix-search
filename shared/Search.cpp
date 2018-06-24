@@ -24,7 +24,7 @@ void SearchBase::SearchMatrix(std::vector<std::vector<int> >& matrix, std::vecto
     
     for (int i = 0; i < matrix.size(); i++)
     {
-        int res = SearchRow(matrix[i], sequence);
+        int res = SearchRow(i, matrix[i], sequence);
         
         if (res >= 0)
         {
@@ -42,7 +42,7 @@ void SearchBase::SearchMatrix(std::vector<std::vector<int> >& matrix, std::vecto
 }
 
 // SearchSequenceNaive methods
-int SearchSequenceNaive::SearchRow(std::vector<int>& row, std::vector<int>& sequence)
+int SearchSequenceNaive::SearchRow(int rowIdx, std::vector<int>& row, std::vector<int>& sequence)
 {
     int rowSize = (int) row.size();
     int seqSize = (int) sequence.size();
@@ -102,7 +102,7 @@ void SearchSequenceOptimized::Preprocess(std::vector<int>& sequence)
 }
 
 // Use KMP search algorithm
-int SearchSequenceOptimized::SearchRow(std::vector<int>& row, std::vector<int>& sequence)
+int SearchSequenceOptimized::SearchRow(int rowIdx, std::vector<int>& row, std::vector<int>& sequence)
 {
     int seqSize = (int) sequence.size();
     int rowSize = (int) row.size();
@@ -133,5 +133,88 @@ int SearchSequenceOptimized::SearchRow(std::vector<int>& row, std::vector<int>& 
     }
     
     return -1;
+}
+
+// SearchUnorderedNaive methods
+
+void SearchUnorderedNaive::Preprocess(std::vector<int>& sequence)
+{
+    m_sortedSeq = sequence;
+    std::sort(m_sortedSeq.begin(), m_sortedSeq.end());
+}
+
+int SearchUnorderedNaive::SearchRow(int rowIdx, std::vector<int>& row, std::vector<int>& sequence)
+{
+    sequence = m_sortedSeq;
+    bool found = false;
+    
+    for (int i = 0; i < sequence.size(); i++)
+    {
+        found = false;
+        
+        for (int j = 0; j < row.size(); j++)
+        {
+            if (sequence[i] == row[j])
+            {
+                // Continue search from current point if there are repeating chars in sequence
+                if (i < sequence.size()-1 &&
+                    sequence[i+1] == sequence[i])
+                {
+                    i++;
+                }
+                else
+                {
+                    found = true;
+                    break;
+                }
+            }
+        }
+        
+        if (!found)
+        {
+            break;
+        }
+    }
+    
+    return found ? 0 : -1;
+}
+
+// SearchUnorderedOptimized methods
+
+void SearchUnorderedOptimized::Preprocess(std::vector<int>& sequence)
+{
+    for (int i = 0; i < sequence.size(); i++)
+    {
+        int currVal = sequence[i];
+        
+        if (m_mapSeq.find(currVal) == m_mapSeq.end())
+        {
+            m_mapSeq[currVal] = 1;
+        }
+        else
+        {
+            m_mapSeq[currVal] = m_mapSeq[currVal] + 1;
+        }
+    }
+}
+
+int SearchUnorderedOptimized::SearchRow(int rowIdx, std::vector<int>& row, std::vector<int>& sequence)
+{
+    std::unordered_map<int,int> mapSeq = m_mapSeq;
+    bool found = true;
+    
+    for ( auto it = mapSeq.begin(); it != mapSeq.end(); ++it )
+    {
+        std::unordered_map<int,int>& rowMap = m_mapMatrix[rowIdx];
+        
+        if (rowMap.find(it->first) == rowMap.end() ||
+            rowMap[it->first] < it->second)
+        {
+            found = false;
+            break;
+        }
+    }
+    
+    return found ? 0 : -1;
 }
 

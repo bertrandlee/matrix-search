@@ -1,1 +1,1 @@
-searchSequence 2 3 
+searchUnordered 3 2 2  

@@ -2,6 +2,7 @@
 #define _MYMATRIX_H_
 
 #include <vector>
+#include <unordered_map>
 
 class MyMatrix
 {
@@ -15,6 +16,7 @@ public:
     void WriteToTextFile(char *fileName);
     void CreateWithRandomValues();
     void CreateWithSpecifiedValues(std::string values);
+    void CreateWithVector(std::vector<std::vector<int> >& values);
     void PrintVectors();
     
     inline std::vector<std::vector<int> >& GetVectorMatrix()
@@ -22,15 +24,15 @@ public:
         return m_vecMatrix;
     }
     
-    inline std::vector<std::vector<int> >& GetSortedMatrix()
+    inline std::vector<std::unordered_map<int, int> >& GetMap()
     {
-        return m_sortedMatrix;
+        return m_mapMatrix;
     }
     
     
 private:
     void EncryptOrDecrypt();
-    void CreateSortedMatrix();
+    void CreateMap();
     void ConvertToVectors();
     
     int *m_pMatrix;
@@ -38,7 +40,7 @@ private:
     int m_colCount;
     long long m_valCount;
     std::vector<std::vector<int> > m_vecMatrix;
-    std::vector<std::vector<int> > m_sortedMatrix;
+    std::vector<std::unordered_map<int, int> > m_mapMatrix;
 };
 
 #endif // _MYMATRIX_H_

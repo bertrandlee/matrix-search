@@ -2,7 +2,7 @@
 #define _SEARCH_H_
 
 #include <vector>
-
+#include <unordered_map>
 
 class SearchBase
 {
@@ -14,8 +14,7 @@ public:
     
 protected:
     virtual void Preprocess(std::vector<int>& sequence) {};
-    virtual int SearchRow(std::vector<int>& row, std::vector<int>& sequence) = 0;
-    
+    virtual int SearchRow(int rowIdx, std::vector<int>& row, std::vector<int>& sequence) = 0;
 };
 
 class SearchSequenceNaive : public SearchBase
@@ -25,7 +24,7 @@ public:
     virtual ~SearchSequenceNaive() {};
     
 private:
-    int SearchRow(std::vector<int>& row, std::vector<int>& sequence);
+    int SearchRow(int rowIdx, std::vector<int>& row, std::vector<int>& sequence);
 };
 
 class SearchSequenceOptimized : public SearchBase
@@ -36,9 +35,40 @@ public:
     
 private:
     void Preprocess(std::vector<int>& sequence);
-    int SearchRow(std::vector<int>& row, std::vector<int>& sequence);
+    int SearchRow(int rowIdx, std::vector<int>& row, std::vector<int>& sequence);
     
     std::vector<int> m_vectLPS;
+};
+
+class SearchUnorderedNaive : public SearchBase
+{
+public:
+    SearchUnorderedNaive() {};
+    virtual ~SearchUnorderedNaive() {};
+    
+private:
+    void Preprocess(std::vector<int>& sequence);
+    int SearchRow(int rowIdx, std::vector<int>& row, std::vector<int>& sequence);
+    
+    std::vector<int> m_sortedSeq;
+};
+
+class SearchUnorderedOptimized : public SearchBase
+{
+public:
+    SearchUnorderedOptimized(std::vector<std::unordered_map<int, int> >& mapMatrix)
+    {
+        m_mapMatrix = mapMatrix;
+    };
+    virtual ~SearchUnorderedOptimized() {};
+    
+    
+private:
+    void Preprocess(std::vector<int>& sequence);
+    int SearchRow(int rowIdx, std::vector<int>& row, std::vector<int>& sequence);
+    
+    std::unordered_map<int,int> m_mapSeq;
+    std::vector<std::unordered_map<int, int> > m_mapMatrix;
 };
 
 

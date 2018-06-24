@@ -145,6 +145,14 @@ void MyMatrix::CreateWithSpecifiedValues(std::string values)
     ConvertToVectors();
 }
 
+void MyMatrix::CreateWithVector(std::vector<std::vector<int> >& values)
+{
+    m_vecMatrix = values;
+    
+    CreateMap();
+}
+
+
 void MyMatrix::EncryptOrDecrypt()
 {
     for (int i = 0; i < m_valCount; i++)
@@ -172,13 +180,44 @@ void MyMatrix::ConvertToVectors()
         }
     }
     
-    m_sortedMatrix = m_vecMatrix;
-    
-    for (int i = 0; i < m_sortedMatrix.size(); i++)
-    {
-        std::sort(m_sortedMatrix[i].begin(), m_sortedMatrix[i].end());
-    }
+    CreateMap();
 }
+
+void MyMatrix::CreateMap()
+{
+    if (m_vecMatrix.size() == 0 || m_vecMatrix[0].size() == 0)
+    {
+        throw std::runtime_error("Empty vector metrix");
+    }
+    
+    std::cout << "Creating map...\n";
+    
+    m_mapMatrix.resize(m_vecMatrix.size());
+    
+    for (int i = 0; i < m_vecMatrix.size(); i++)
+    {
+        std::unordered_map<int,int>& currMap = m_mapMatrix[i];
+        
+        currMap.reserve(m_vecMatrix[i].size());
+        
+        for (int j = 0; j < m_vecMatrix[i].size(); j++)
+        {
+            int currVal = m_vecMatrix[i][j];
+            
+            if (currMap.find(currVal) == currMap.end())
+            {
+                currMap[currVal] = 1;
+            }
+            else
+            {
+                currMap[currVal] = currMap[currVal] + 1;
+            }
+        }
+    }
+    
+    std::cout << "Created map\n";
+}
+
 
 void MyMatrix::PrintVectors()
 {
@@ -201,20 +240,5 @@ void MyMatrix::PrintVectors()
             
             std::cout << std::endl;
         }
-        
-        std::cout << "Sorted matrix:" << std::endl;
-        std::cout << m_sortedMatrix.size() << std::endl;
-        std::cout << m_sortedMatrix[0].size() << std::endl;
-        
-        for (int i = 0; i < m_sortedMatrix.size(); i++)
-        {
-            for (int j = 0; j < m_sortedMatrix[i].size(); j++)
-            {
-                std::cout << m_sortedMatrix[i][j] << " ";
-            }
-            
-            std::cout << std::endl;
-        }
-
     }
 }
