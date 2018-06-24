@@ -1,5 +1,6 @@
 #include <ctime>
 #include <iostream>
+#include <algorithm>
 #include <unistd.h>
 #include "Search.h"
 
