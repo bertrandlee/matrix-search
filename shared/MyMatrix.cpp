@@ -190,7 +190,7 @@ void MyMatrix::CreateMap()
         throw std::runtime_error("Empty vector metrix");
     }
     
-    std::cout << "Creating map...\n";
+    //std::cout << "Creating map...\n";
     
     m_mapMatrix.resize(m_vecMatrix.size());
     
@@ -215,7 +215,7 @@ void MyMatrix::CreateMap()
         }
     }
     
-    std::cout << "Created map\n";
+    //std::cout << "Created map\n";
 }
 
 
