@@ -1108,6 +1108,8 @@ TEST_CASE( "Baseline Large 2D Vector Iterate", "[SearchUnorderedOptimized]" ) {
     
     clock_t time_b = clock();
     std::cout << "BaselineLarge2DVectorIterate: matrix iterate time = " << (time_b - time_a) / 1000 << " ms" << std::endl;
+    condition = false;
+    REQUIRE(condition == false);
     
 }
 
@@ -1141,6 +1143,9 @@ TEST_CASE( "Baseline Large Flat Array Iterate", "[SearchUnorderedOptimized]" ) {
     std::cout << "BaselineLargeFlatArrayIterate: matrix iterate time = " << (time_b - time_a) / 1000 << " ms" << std::endl;
  
     delete [] pArray;
+
+    condition = false;
+    REQUIRE(condition == false);
 }
 
 
