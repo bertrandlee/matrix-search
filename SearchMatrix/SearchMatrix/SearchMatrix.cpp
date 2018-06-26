@@ -22,13 +22,28 @@
 class MyParser
 {
 public:
-    MyParser() {};
-    virtual ~MyParser() {};
-    
-    void ReadMatrixFile(char* fileName)
+    MyParser()
     {
-        printf("Reading bin file: %s\n", fileName);
-        m_matrix.ReadFromBinFile(fileName);
+        m_pSearchSequence = NULL;
+        m_pSearchUnordered = NULL;
+        m_pSearchBestMatch = NULL;
+    };
+    
+    virtual ~MyParser()
+    {
+        if (m_pSearchSequence) delete m_pSearchSequence;
+        if (m_pSearchUnordered) delete m_pSearchUnordered;
+        if (m_pSearchBestMatch) delete m_pSearchBestMatch;
+    };
+    
+    void Initialize(char* matrixFile)
+    {
+        printf("Reading bin file: %s\n", matrixFile);
+        m_matrix.ReadFromBinFile(matrixFile);
+        
+        m_pSearchSequence = new SearchSequenceOptimized();
+        m_pSearchUnordered = new SearchUnorderedOptimized(m_matrix.GetMap());
+        m_pSearchBestMatch = new SearchBestMatchOptimized(m_matrix.GetMap());
     }
     
     void ParseConsole()
@@ -161,26 +176,24 @@ private:
         
         if (strCmd == "searchSequence")
         {
-            SearchSequenceOptimized search;
-            
             ParseCommandValues(strCmd, stream, sequence);
             //PrintParsedCommand(strCmd, sequence);
-            search.SearchMatrix(m_matrix.GetVectorMatrix(), sequence, result);
+            m_pSearchSequence->SearchMatrix(m_matrix.GetVectorMatrix(), sequence, result);
             PrintResult(result);
         }
         else if (strCmd == "searchUnordered")
         {
-            SearchUnorderedOptimized search(m_matrix.GetMap());
-            
             ParseCommandValues(strCmd, stream, sequence);
             //PrintParsedCommand(strCmd, sequence);
-            search.SearchMatrix(m_matrix.GetVectorMatrix(), sequence, result);
+            m_pSearchUnordered->SearchMatrix(m_matrix.GetVectorMatrix(), sequence, result);
             PrintResult(result);
         }
         else if (strCmd == "searchBestMatch")
         {
             ParseCommandValues(strCmd, stream, sequence);
-            PrintParsedCommand(strCmd, sequence);
+            //PrintParsedCommand(strCmd, sequence);
+            m_pSearchBestMatch->SearchMatrix(m_matrix.GetVectorMatrix(), sequence, result);
+            PrintResult(result);
         }
         else
         {
@@ -191,6 +204,9 @@ private:
     
 private:
     MyMatrix m_matrix;
+    SearchSequenceOptimized *m_pSearchSequence;
+    SearchUnorderedOptimized *m_pSearchUnordered;
+    SearchBestMatchOptimized *m_pSearchBestMatch;
 };
 
 void Usage(const char *cmd)
@@ -216,7 +232,7 @@ int main(int argc, const char * argv[]) {
     {
         // Read from bin file
         char *fileName = (char *) argv[1];
-        parser.ReadMatrixFile(fileName);
+        parser.Initialize(fileName);
         
         if (argc == 2)
         {

@@ -4,6 +4,8 @@
 #include <unistd.h>
 #include "Search.h"
 
+
+
 // SearchBase methods
 void SearchBase::SearchMatrix(std::vector<std::vector<int> >& matrix, std::vector<int>& sequence, std::vector<int>& result, bool logtime, const char *caller)
 {
@@ -17,19 +19,52 @@ void SearchBase::SearchMatrix(std::vector<std::vector<int> >& matrix, std::vecto
         throw std::invalid_argument("Invalid sequence size");
     }
     
-    result.reserve(matrix.size());
+    result.clear();
     
     clock_t time_a = clock();
     
     Preprocess(sequence);
     
-    for (int i = 0; i < matrix.size(); i++)
+    if (m_searchType == FindMatchingRows)
     {
-        int res = SearchRow(i, matrix[i], sequence);
+        result.reserve(matrix.size());
         
-        if (res >= 0)
+        for (int i = 0; i < matrix.size(); i++)
         {
-            result.push_back(i);
+            int res = SearchRow(i, matrix[i], sequence);
+            
+            if (res >= 0)
+            {
+                result.push_back(i);
+            }
+        }
+    }
+    else // searchType == FindBestMatchRow
+    {
+        int maxMatchCount = 0;
+        int maxMatchIdx = -1;
+        
+        for (int i = 0; i < matrix.size(); i++)
+        {
+            int matchCount = SearchRow(i, matrix[i], sequence);
+            
+            if (matchCount == sequence.size())
+            {
+                // Full match found, exit search loop
+                maxMatchIdx = i;
+                maxMatchCount = matchCount;
+                break;
+            }
+            else if (matchCount > maxMatchCount)
+            {
+                maxMatchIdx = i;
+                maxMatchCount = matchCount;
+            }
+        }
+        
+        if (maxMatchIdx >= 0)
+        {
+            result.push_back(maxMatchIdx);
         }
     }
 
@@ -41,6 +76,30 @@ void SearchBase::SearchMatrix(std::vector<std::vector<int> >& matrix, std::vecto
     }
 
 }
+
+// SearchSequenceMapBase methods
+void SearchSequenceMapBase::Preprocess(std::vector<int>& sequence)
+{
+    m_mapSeq.clear();
+    m_mapSeq.reserve(sequence.size());
+    
+    for (int i = 0; i < sequence.size(); i++)
+    {
+        int currVal = sequence[i];
+        
+        auto it = m_mapSeq.find(currVal);
+        
+        if (it == m_mapSeq.end())
+        {
+            m_mapSeq[currVal] = 1;
+        }
+        else
+        {
+            it->second = it->second + 1;
+        }
+    }
+}
+
 
 // SearchSequenceNaive methods
 int SearchSequenceNaive::SearchRow(int rowIdx, std::vector<int>& row, std::vector<int>& sequence)
@@ -64,7 +123,7 @@ int SearchSequenceNaive::SearchRow(int rowIdx, std::vector<int>& row, std::vecto
         
         if (found)
         {
-            ret = i;
+            ret = 0;
             break;
         }
     }
@@ -157,10 +216,10 @@ int SearchUnorderedNaive::SearchRow(int rowIdx, std::vector<int>& row, std::vect
         {
             if (sequence[i] == row[j])
             {
-                // Continue search from current point if there are repeating chars in sequence
                 if (i < sequence.size()-1 &&
                     sequence[i+1] == sequence[i])
                 {
+                    // Continue search from current point in row if next item in sequence repeats
                     i++;
                 }
                 else
@@ -182,34 +241,19 @@ int SearchUnorderedNaive::SearchRow(int rowIdx, std::vector<int>& row, std::vect
 
 // SearchUnorderedOptimized methods
 
-void SearchUnorderedOptimized::Preprocess(std::vector<int>& sequence)
-{
-    for (int i = 0; i < sequence.size(); i++)
-    {
-        int currVal = sequence[i];
-        
-        if (m_mapSeq.find(currVal) == m_mapSeq.end())
-        {
-            m_mapSeq[currVal] = 1;
-        }
-        else
-        {
-            m_mapSeq[currVal] = m_mapSeq[currVal] + 1;
-        }
-    }
-}
-
 int SearchUnorderedOptimized::SearchRow(int rowIdx, std::vector<int>& row, std::vector<int>& sequence)
 {
-    std::unordered_map<int,int> mapSeq = m_mapSeq;
+    std::unordered_map<int,int>& mapSeq = m_mapSeq;
     bool found = true;
     
-    for ( auto it = mapSeq.begin(); it != mapSeq.end(); ++it )
+    for ( auto itSeq = mapSeq.begin(); itSeq != mapSeq.end(); ++itSeq )
     {
         std::unordered_map<int,int>& rowMap = m_mapMatrix[rowIdx];
         
-        if (rowMap.find(it->first) == rowMap.end() ||
-            rowMap[it->first] < it->second)
+        auto itRow = rowMap.find(itSeq->first);
+        
+        if (itRow == rowMap.end() ||
+            itRow->second < itSeq->second)
         {
             found = false;
             break;
@@ -218,4 +262,73 @@ int SearchUnorderedOptimized::SearchRow(int rowIdx, std::vector<int>& row, std::
     
     return found ? 0 : -1;
 }
+
+// SearchBestMatchNaive methods
+
+void SearchBestMatchNaive::Preprocess(std::vector<int>& sequence)
+{
+    m_sortedSeq = sequence;
+    std::sort(m_sortedSeq.begin(), m_sortedSeq.end());
+}
+
+int SearchBestMatchNaive::SearchRow(int rowIdx, std::vector<int>& row, std::vector<int>& sequence)
+{
+    sequence = m_sortedSeq;
+    int matchCount = 0;
+    
+    for (int i = 0; i < sequence.size(); i++)
+    {
+        for (int j = 0; j < row.size(); j++)
+        {
+            if (sequence[i] == row[j])
+            {
+                matchCount++;
+                
+                if (i < sequence.size()-1 &&
+                    sequence[i+1] == sequence[i])
+                {
+                    // Continue search from current point in row if next item in sequence repeats
+                    i++;
+                }
+                else
+                {
+                    // Restart row search with next (different) item in sequence
+                    break;
+                }
+            }
+        }
+        
+        // Advance to last item in repeating sequence (since remaining repeating items were not matched)
+        while (i < sequence.size()-1 &&
+               sequence[i+1] == sequence[i])
+        {
+            i++;
+        }
+    }
+    
+    return matchCount;
+}
+    
+// SearchBestMatchOptimized methods
+
+int SearchBestMatchOptimized::SearchRow(int rowIdx, std::vector<int>& row, std::vector<int>& sequence)
+{
+    std::unordered_map<int,int>& mapSeq = m_mapSeq;
+    int matchCount = 0;
+    
+    for ( auto itSeq = mapSeq.begin(); itSeq != mapSeq.end(); ++itSeq )
+    {
+        std::unordered_map<int,int>& rowMap = m_mapMatrix[rowIdx];
+        
+        auto itRow = rowMap.find(itSeq->first);
+        
+        if (itRow != rowMap.end())
+        {
+            matchCount += std::min(itRow->second, itSeq->second);
+        }
+    }
+    
+    return matchCount;
+}
+
 

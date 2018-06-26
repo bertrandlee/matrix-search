@@ -204,13 +204,15 @@ void MyMatrix::CreateMap()
         {
             int currVal = m_vecMatrix[i][j];
             
-            if (currMap.find(currVal) == currMap.end())
+            auto it = currMap.find(currVal);
+            
+            if (it == currMap.end())
             {
                 currMap[currVal] = 1;
             }
             else
             {
-                currMap[currVal] = currMap[currVal] + 1;
+                it->second = it->second + 1;
             }
         }
     }
@@ -242,3 +244,4 @@ void MyMatrix::PrintVectors()
         }
     }
 }
+
