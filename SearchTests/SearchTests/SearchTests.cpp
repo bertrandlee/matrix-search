@@ -1092,7 +1092,7 @@ TEST_CASE( "SearchBestMatchOptimized Basic MultipleCalls", "[SearchUnorderedOpti
 
 TEST_CASE( "Baseline Large 2D Vector Iterate", "[SearchUnorderedOptimized]" ) {
     std::vector<std::vector<int> > matrix;
-    volatile bool condition = false;
+    volatile bool condition = false; // Use volatile to ensure code is not optimized out
     
     CreateLargeMatrix(matrix, 3);
     
@@ -1102,7 +1102,7 @@ TEST_CASE( "Baseline Large 2D Vector Iterate", "[SearchUnorderedOptimized]" ) {
     {
         for (int j = 0; j < MAX_DIM; j++)
         {
-            condition = matrix[i][j] >= 2;            
+            condition = matrix[i][j] >= 2;
         }
     }
     
@@ -1115,7 +1115,7 @@ TEST_CASE( "Baseline Large 2D Vector Iterate", "[SearchUnorderedOptimized]" ) {
 
 TEST_CASE( "Baseline Large Flat Array Iterate", "[SearchUnorderedOptimized]" ) {
     unsigned int arraySize = MAX_DIM * MAX_DIM;
-    volatile bool condition = false;
+    volatile bool condition = false; // Use volatile to ensure code is not optimized out
     int *pArray = NULL;
     unsigned int rowOffset;
     int i, j;

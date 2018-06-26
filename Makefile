@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -Wall -Wno-sign-compare -I ./inc -std=c++11 -O3
+CFLAGS = -Wall -Wno-sign-compare -I ./inc -std=c++11 -Ofast -march=native
 GENMATRIX_OBJECTS = GenerateMatrix.o MyMatrix.o
 SEARCHMATRIX_OBJECTS = SearchMatrix.o MyMatrix.o Search.o
 SEARCHTESTS_OBJECTS = Search.o SearchTests.o MyMatrix.o
