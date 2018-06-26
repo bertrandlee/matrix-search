@@ -72,7 +72,7 @@ void SearchBase::SearchMatrix(std::vector<std::vector<int> >& matrix, std::vecto
     
     if (logtime)
     {
-        std::cout << caller << ": matrix search time = " << (time_b - time_a) / 1000 << " ms" << std::endl;
+        std::cout << caller << ": matrix search time = " << (time_b - time_a) << " us" << std::endl;
     }
 
 }
