@@ -1088,6 +1088,63 @@ TEST_CASE( "SearchBestMatchOptimized Basic MultipleCalls", "[SearchUnorderedOpti
 // Stress/performance tests
 ///////////////////////////
 
+// Baseline stress tests
+
+TEST_CASE( "Baseline Large 2D Vector Iterate", "[SearchUnorderedOptimized]" ) {
+    std::vector<std::vector<int> > matrix;
+    bool condition = false;
+    
+    CreateLargeMatrix(matrix, 3);
+    
+    clock_t time_a = clock();
+    
+    for (int i = 0; i < MAX_DIM; i++)
+    {
+        for (int j = 0; j < MAX_DIM; j++)
+        {
+            condition = matrix[i][j] >= 2;
+        }
+    }
+    
+    clock_t time_b = clock();
+    std::cout << "BaselineLarge2DVectorIterate: matrix iterate time = " << (time_b - time_a) / 1000 << " ms" << std::endl;
+    
+}
+
+TEST_CASE( "Baseline Large Flat Array Iterate", "[SearchUnorderedOptimized]" ) {
+    unsigned int arraySize = MAX_DIM * MAX_DIM;
+    bool condition = false;
+    int *pArray = NULL;
+    unsigned int rowOffset;
+    int i, j;
+    
+    pArray = new int[arraySize];
+    
+    for (unsigned int i = 0; i < arraySize; i++)
+    {
+        pArray[i] = i % 3;
+    }
+    
+    clock_t time_a = clock();
+    
+    for (i = 0; i < MAX_DIM; i++)
+    {
+        rowOffset = i * MAX_DIM;
+        
+        for (j = 0; j < MAX_DIM; j++)
+        {
+            condition = pArray[rowOffset + j] >= 2;
+        }
+    }
+    
+    clock_t time_b = clock();
+    std::cout << "BaselineLargeFlatArrayIterate: matrix iterate time = " << (time_b - time_a) / 1000 << " ms" << std::endl;
+ 
+    delete [] pArray;
+}
+
+
+
 // SearchSequenceNaive stress tests
 
 TEST_CASE( "SearchSequenceNaive Large NoMatch", "[SearchSequenceNaive]" ) {
@@ -1327,6 +1384,7 @@ TEST_CASE( "SearchUnorderedNaive Stress NoMatch", "[SearchUnorderedNaive]" ) {
 }
 
 // SearchUnorderedOptimized stress tests
+
 
 TEST_CASE( "SearchUnorderedOptimized Large Match", "[SearchUnorderedOptimized]" ) {
     std::vector<std::vector<int> > matrix;
