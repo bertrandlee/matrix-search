@@ -1100,10 +1100,7 @@ TEST_CASE( "Baseline Large 2D Vector Iterate", "[SearchUnorderedOptimized]" ) {
     
     for (int i = 0; i < MAX_DIM; i++)
     {
-        for (int j = 0; j < MAX_DIM; j++)
-        {
-            condition = matrix[i][j] >= 2;
-        }
+        condition = matrix[i][2] >= 2;
     }
     
     clock_t time_b = clock();
@@ -1132,11 +1129,7 @@ TEST_CASE( "Baseline Large Flat Array Iterate", "[SearchUnorderedOptimized]" ) {
     for (i = 0; i < MAX_DIM; i++)
     {
         rowOffset = i * MAX_DIM;
-        
-        for (j = 0; j < MAX_DIM; j++)
-        {
-            condition = pArray[rowOffset + j] >= 2;
-        }
+        condition = pArray[rowOffset + 2] >= 2;
     }
     
     clock_t time_b = clock();
