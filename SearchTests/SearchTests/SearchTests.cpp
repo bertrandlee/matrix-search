@@ -13,6 +13,10 @@
 
 #define MAX_DIM 10000
 
+static std::vector<std::vector<int> > g_matrix1;
+static MyMatrix g_myMatrix1;
+static bool g_created = false;
+
 
 void CreateLargeMatrix(std::vector<std::vector<int> >& matrix, int mod)
 {
@@ -26,6 +30,22 @@ void CreateLargeMatrix(std::vector<std::vector<int> >& matrix, int mod)
         {
             matrix[i][j] = j % mod;
         }
+    }
+}
+
+void CreateLargeMatrixGlobal()
+{
+    if (!g_created)
+    {
+        CreateLargeMatrix(g_matrix1, MAX_DIM);
+        g_matrix1[1][1] = MAX_DIM;
+        g_matrix1[3][0] = MAX_DIM;
+        
+        std::cout << "Creating large matrix...\n";
+        g_myMatrix1.CreateWithVector(g_matrix1);
+        std::cout << "Created large matrix\n";
+        
+        g_created = true;
     }
 }
 
@@ -410,7 +430,7 @@ TEST_CASE( "SearchUnorderedOptimized Singleton Match", "[SearchUnorderedOptimize
     matrix.SetDimensions(1, 1);
     matrix.CreateWithSpecifiedValues("1");
     
-    SearchUnorderedOptimized search(matrix.GetMap());
+    SearchUnorderedOptimized search(&matrix);
     search.SearchMatrix(matrix.GetVectorMatrix(), sequence, result);
     REQUIRE(result == expected);
 }
@@ -424,7 +444,7 @@ TEST_CASE( "SearchUnorderedOptimized Singleton Match Negative", "[SearchUnordere
     matrix.SetDimensions(1, 1);
     matrix.CreateWithSpecifiedValues("-1");
     
-    SearchUnorderedOptimized search(matrix.GetMap());
+    SearchUnorderedOptimized search(&matrix);
     search.SearchMatrix(matrix.GetVectorMatrix(), sequence, result);
     REQUIRE(result == expected);
 }
@@ -438,7 +458,7 @@ TEST_CASE( "SearchUnorderedOptimized Singleton NoMatch", "[SearchUnorderedOptimi
     matrix.SetDimensions(1, 1);
     matrix.CreateWithSpecifiedValues("1");
     
-    SearchUnorderedOptimized search(matrix.GetMap());
+    SearchUnorderedOptimized search(&matrix);
     search.SearchMatrix(matrix.GetVectorMatrix(), sequence, result);
     REQUIRE(result == expected);
 }
@@ -452,8 +472,9 @@ TEST_CASE( "SearchUnorderedOptimized Basic Match", "[SearchUnorderedOptimized]" 
     matrix.SetDimensions(4, 4);
     matrix.CreateWithSpecifiedValues("1,2,2,3,5,6,3,2,9,10,2,3,2,3,2,2");
     
-    SearchUnorderedOptimized search(matrix.GetMap());
+    SearchUnorderedOptimized search(&matrix);
     search.SearchMatrix(matrix.GetVectorMatrix(), sequence, result);
+    std::sort(result.begin(), result.end());
     REQUIRE(result == expected);
 }
 
@@ -466,7 +487,7 @@ TEST_CASE( "SearchUnorderedOptimized Basic Match Triplet", "[SearchUnorderedOpti
     matrix.SetDimensions(4, 4);
     matrix.CreateWithSpecifiedValues("1,2,2,3,5,6,3,2,9,10,2,3,2,4,2,2");
     
-    SearchUnorderedOptimized search(matrix.GetMap());
+    SearchUnorderedOptimized search(&matrix);
     search.SearchMatrix(matrix.GetVectorMatrix(), sequence, result);
     REQUIRE(result == expected);
 }
@@ -480,7 +501,7 @@ TEST_CASE( "SearchUnorderedOptimized Basic NoMatch", "[SearchUnorderedOptimized]
     matrix.SetDimensions(4, 4);
     matrix.CreateWithSpecifiedValues("1,2,3,4,5,6,3,2,9,10,2,3,2,3,11,12");
     
-    SearchUnorderedOptimized search(matrix.GetMap());
+    SearchUnorderedOptimized search(&matrix);
     search.SearchMatrix(matrix.GetVectorMatrix(), sequence, result);
     REQUIRE(result == expected);
 }
@@ -498,7 +519,7 @@ TEST_CASE( "SearchUnorderedOptimized Basic MultipleCalls", "[SearchUnorderedOpti
     matrix.SetDimensions(4, 4);
     matrix.CreateWithSpecifiedValues("1,2,3,2,5,6,3,2,9,10,2,3,2,3,2,2");
     
-    SearchUnorderedOptimized search(matrix.GetMap());
+    SearchUnorderedOptimized search(&matrix);
     search.SearchMatrix(matrix.GetVectorMatrix(), sequence1, result);
     REQUIRE(result == expected1);
     search.SearchMatrix(matrix.GetVectorMatrix(), sequence1, result);
@@ -1058,7 +1079,7 @@ TEST_CASE( "SearchBestMatchOptimized Basic RepeatMatch 6", "[SearchBestMatchOpti
     REQUIRE(result == expected);
 }
 
-TEST_CASE( "SearchBestMatchOptimized Basic MultipleCalls", "[SearchUnorderedOptimized]" ) {
+TEST_CASE( "SearchBestMatchOptimized Basic MultipleCalls", "[SearchBestMatchOptimized]" ) {
     MyMatrix matrix;
     std::vector<int> sequence1 = {3, 2};
     std::vector<int> expected1 = {0};
@@ -1139,6 +1160,8 @@ TEST_CASE( "Baseline Large Flat Array Iterate", "[SearchUnorderedOptimized]" ) {
 
     condition = false;
     REQUIRE(condition == false);
+    
+    CreateLargeMatrixGlobal();
 }
 
 
@@ -1385,41 +1408,27 @@ TEST_CASE( "SearchUnorderedNaive Stress NoMatch", "[SearchUnorderedNaive]" ) {
 
 
 TEST_CASE( "SearchUnorderedOptimized Large Match", "[SearchUnorderedOptimized]" ) {
-    std::vector<std::vector<int> > matrix;
-    std::vector<int> sequence = {4, 4};
+    std::vector<int> sequence = {2, MAX_DIM};
     std::vector<int> expected = {1, 3};
     std::vector<int> result;
-    
-    CreateLargeMatrix(matrix, 4);
-    matrix[1][1] = 4;
-    matrix[1][MAX_DIM-1] = 4;
-    matrix[3][1] = 4;
-    matrix[3][MAX_DIM-1] = 4;
-    
-    MyMatrix mymatrix;
-    mymatrix.CreateWithVector(matrix);
-    SearchUnorderedOptimized search(mymatrix.GetMap());
-    search.SearchMatrix(matrix, sequence, result, true, "SearchUnorderedOptimized");
+
+    SearchUnorderedOptimized search(&g_myMatrix1);
+    search.SearchMatrix(g_matrix1, sequence, result, true, "SearchUnorderedOptimized");
+    std::sort(result.begin(), result.end());
     REQUIRE(result == expected);
 }
 
 TEST_CASE( "SearchUnorderedOptimized Large NoMatch", "[SearchUnorderedOptimized]" ) {
-    std::vector<std::vector<int> > matrix;
-    std::vector<int> sequence = {4};
+    std::vector<int> sequence = {MAX_DIM+1};
     std::vector<int> expected = {};
     std::vector<int> result;
     
-    CreateLargeMatrix(matrix, 4);
-    
-    MyMatrix mymatrix;
-    mymatrix.CreateWithVector(matrix);
-    SearchUnorderedOptimized search(mymatrix.GetMap());
-    search.SearchMatrix(matrix, sequence, result, true, "SearchUnorderedOptimized");
+    SearchUnorderedOptimized search(&g_myMatrix1);
+    search.SearchMatrix(g_matrix1, sequence, result, true, "SearchUnorderedOptimized");
     REQUIRE(result == expected);
 }
 
 TEST_CASE( "SearchUnorderedOptimized Stress Match", "[SearchUnorderedOptimized]" ) {
-    std::vector<std::vector<int> > matrix;
     std::vector<int> sequence;
     std::vector<int> expected = {1, 3};
     std::vector<int> result;
@@ -1431,20 +1440,13 @@ TEST_CASE( "SearchUnorderedOptimized Stress Match", "[SearchUnorderedOptimized]"
     
     sequence.push_back(MAX_DIM);
     
-    CreateLargeMatrix(matrix, MAX_DIM);
-    matrix[1][1] = MAX_DIM;
-    matrix[3][0] = MAX_DIM;
-    
-    MyMatrix mymatrix;
-    mymatrix.CreateWithVector(matrix);
-    SearchUnorderedOptimized search(mymatrix.GetMap());
-    
-    search.SearchMatrix(matrix, sequence, result, true, "SearchUnorderedOptimized");
+    SearchUnorderedOptimized search(&g_myMatrix1);
+    search.SearchMatrix(g_matrix1, sequence, result, true, "SearchUnorderedOptimized");
+    std::sort(result.begin(),result.end());
     REQUIRE(result == expected);
 }
 
 TEST_CASE( "SearchUnorderedOptimized Stress NoMatch", "[SearchUnorderedOptimized]" ) {
-    std::vector<std::vector<int> > matrix;
     std::vector<int> sequence;
     std::vector<int> expected = {};
     std::vector<int> result;
@@ -1454,15 +1456,11 @@ TEST_CASE( "SearchUnorderedOptimized Stress NoMatch", "[SearchUnorderedOptimized
         sequence.push_back(i);
     }
     
-    sequence.push_back(MAX_DIM);
+    sequence.push_back(MAX_DIM+1);
     
-    CreateLargeMatrix(matrix, MAX_DIM);
+    SearchUnorderedOptimized search(&g_myMatrix1);
     
-    MyMatrix mymatrix;
-    mymatrix.CreateWithVector(matrix);
-    SearchUnorderedOptimized search(mymatrix.GetMap());
-    
-    search.SearchMatrix(matrix, sequence, result, true, "SearchUnorderedOptimized");
+    search.SearchMatrix(g_matrix1, sequence, result, true, "SearchUnorderedOptimized");
     REQUIRE(result == expected);
 }
 
@@ -1503,40 +1501,22 @@ TEST_CASE( "SearchBestMatchNaive Stress NoMatch", "[SearchBestMatchNaive]" ) {
 // SearchBestMatchOptimized stress tests
 
 TEST_CASE( "SearchBestMatchOptimized Stress Match", "[SearchBestMatchOptimized]" ) {
-    std::vector<std::vector<int> > matrix;
-    std::vector<int> sequence = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20};
-    std::vector<int> expected = {MAX_DIM-1};
+    std::vector<int> sequence = {MAX_DIM, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20};
+    std::vector<int> expected = {1};
     std::vector<int> result;
     
-    CreateLargeMatrix(matrix, 1);
-    matrix[MAX_DIM-2][MAX_DIM-1] = 1;
-    matrix[MAX_DIM-2][MAX_DIM-2] = 2;
-    
-    matrix[MAX_DIM-1][MAX_DIM-1] = 1;
-    matrix[MAX_DIM-1][MAX_DIM-2] = 2;
-    matrix[MAX_DIM-1][MAX_DIM-3] = 3;
-
-    MyMatrix mymatrix;
-    mymatrix.CreateWithVector(matrix);
-    
-    SearchBestMatchOptimized search(mymatrix.GetMap());
-    search.SearchMatrix(matrix, sequence, result, true, "SearchBestMatchOptimized");
+    SearchBestMatchOptimized search(g_myMatrix1.GetMap());
+    search.SearchMatrix(g_matrix1, sequence, result, true, "SearchBestMatchOptimized");
     REQUIRE(result == expected);
 }
 
 TEST_CASE( "SearchBestMatchOptimized Stress NoMatch", "[SearchBestMatchOptimized]" ) {
-    std::vector<std::vector<int> > matrix;
-    std::vector<int> sequence = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20};
+    std::vector<int> sequence = {-1, -2, -3, -4, -5, -6, -7, -8, -9, -10, -11, -12, -13, -14, -15, -16, -17, -18, -19, -20};
     std::vector<int> expected = {};
     std::vector<int> result;
     
-    CreateLargeMatrix(matrix, 1);
-
-    MyMatrix mymatrix;
-    mymatrix.CreateWithVector(matrix);
-    
-    SearchBestMatchOptimized search(mymatrix.GetMap());
-    search.SearchMatrix(matrix, sequence, result, true, "SearchBestMatchOptimized");
+    SearchBestMatchOptimized search(g_myMatrix1.GetMap());
+    search.SearchMatrix(g_matrix1, sequence, result, true, "SearchBestMatchOptimized");
     REQUIRE(result == expected);
 }
 

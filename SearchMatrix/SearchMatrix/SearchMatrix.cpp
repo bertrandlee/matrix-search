@@ -42,7 +42,7 @@ public:
         m_matrix.ReadFromBinFile(matrixFile);
         
         m_pSearchSequence = new SearchSequenceOptimized();
-        m_pSearchUnordered = new SearchUnorderedOptimized(m_matrix.GetMap());
+        m_pSearchUnordered = new SearchUnorderedOptimized(&m_matrix);
         m_pSearchBestMatch = new SearchBestMatchOptimized(m_matrix.GetMap());
     }
     

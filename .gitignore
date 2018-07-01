@@ -2,3 +2,5 @@
 matrix.dat
 output.txt
 mysearch.txt
+*.xcuserstate
+*.xcbkptlist

@@ -29,10 +29,16 @@ public:
         return m_mapMatrix;
     }
     
+    inline std::unordered_map<int, std::unordered_map<int, std::unordered_map<int,int> > >& GetMasterMap()
+    {
+        return m_mapMaster;
+    }
+    
     
 private:
     void EncryptOrDecrypt();
     void CreateMap();
+    void CreateMasterMap();
     void ConvertToVectors();
     
     int *m_pMatrix;
@@ -41,6 +47,7 @@ private:
     long long m_valCount;
     std::vector<std::vector<int> > m_vecMatrix;
     std::vector<std::unordered_map<int, int> > m_mapMatrix;
+    std::unordered_map<int, std::unordered_map<int, std::unordered_map<int,int> > > m_mapMaster;
 };
 
 #endif // _MYMATRIX_H_

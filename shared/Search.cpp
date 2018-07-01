@@ -20,15 +20,18 @@ void SearchBase::SearchMatrix(std::vector<std::vector<int> >& matrix, std::vecto
     }
     
     result.clear();
+    result.reserve(matrix.size());
     
     clock_t time_a = clock();
     
     Preprocess(sequence);
     
-    if (m_searchType == FindMatchingRows)
+    if (m_searchType == FindMatrix)
     {
-        result.reserve(matrix.size());
-        
+        SearchAllRows(sequence, result);
+    }
+    else if (m_searchType == FindMatchingRows)
+    {        
         for (int i = 0; i < matrix.size(); i++)
         {
             int res = SearchRow(i, matrix[i], sequence);
@@ -241,27 +244,76 @@ int SearchUnorderedNaive::SearchRow(int rowIdx, std::vector<int>& row, std::vect
 
 // SearchUnorderedOptimized methods
 
-int SearchUnorderedOptimized::SearchRow(int rowIdx, std::vector<int>& row, std::vector<int>& sequence)
+void FindCommonValues(std::unordered_map<int,int>& mapA, std::unordered_map<int,int>& mapB, std::unordered_map<int,int>& result)
 {
-    std::unordered_map<int,int>& mapSeq = m_mapSeq;
-    bool found = true;
-    
-    for ( auto itSeq = mapSeq.begin(); itSeq != mapSeq.end(); ++itSeq )
+    for (auto it = mapA.begin(); it != mapA.end(); ++it)
     {
-        std::unordered_map<int,int>& rowMap = m_mapMatrix[rowIdx];
-        
-        auto itRow = rowMap.find(itSeq->first);
-        
-        if (itRow == rowMap.end() ||
-            itRow->second < itSeq->second)
+        if (mapB.find(it->first) != mapB.end())
         {
-            found = false;
+            result[it->first] = 1;
+        }
+    }
+}
+
+void FindAllCommonValues(std::vector<std::unordered_map<int,int>* >& matches, std::vector<int>& result)
+{
+    std::unordered_map<int,int> curr, res;
+    
+    if (matches.size() == 0)
+        return;
+    
+    curr = *(matches[0]);
+    
+    for (int i = 1; i < matches.size(); i++)
+    {
+        FindCommonValues(curr, *(matches[i]), res);
+        curr = res;
+        res.clear();
+    }
+    
+    for (auto it = curr.begin(); it != curr.end(); ++it)
+    {
+        result.push_back(it->first);
+    }
+}
+
+void SearchUnorderedOptimized::SearchAllRows(std::vector<int>& sequence, std::vector<int>& result)
+{
+    auto& mapMaster = m_pMatrix->GetMasterMap();
+    
+    std::unordered_map<int,int>& mapSeq = m_mapSeq;
+    
+    std::vector<std::unordered_map<int,int>* > matches;
+    matches.reserve(sequence.size());
+    
+    bool allFound = true;;
+    
+    for ( auto itSeq = mapSeq.begin(); itSeq != mapSeq.end(); ++itSeq)
+    {
+        int value = itSeq->first;
+        int count = itSeq->second;
+        
+        if (mapMaster.find(value) != mapMaster.end() &&
+            mapMaster[value].find(count) != mapMaster[value].end())
+        {
+            matches.push_back(&(mapMaster[value][count]));
+        }
+        else
+        {
+            // Could not find an element in sequence - break out
+            allFound = false;
             break;
         }
     }
     
-    return found ? 0 : -1;
+    if (allFound)
+    {
+        FindAllCommonValues(matches, result);
+    }
+    
+    //std::sort(result.begin(), result.end());
 }
+
 
 // SearchBestMatchNaive methods
 
@@ -330,5 +382,4 @@ int SearchBestMatchOptimized::SearchRow(int rowIdx, std::vector<int>& row, std::
     
     return matchCount;
 }
-
 

@@ -3,11 +3,13 @@
 
 #include <vector>
 #include <unordered_map>
+#include "MyMatrix.h"
 
 typedef enum _SearchType
 {
     FindMatchingRows,
-    FindBestMatchRow
+    FindBestMatchRow,
+    FindMatrix
 } SearchType;
 
 class SearchBase
@@ -25,7 +27,10 @@ protected:
     
     // If m_searchType == FindMatchingRows, return 0 if found, -1 if not found
     // If m_searchType == FindBestMatchRow, return count of matching search elements
-    virtual int SearchRow(int rowIdx, std::vector<int>& row, std::vector<int>& sequence) = 0;
+    virtual int SearchRow(int rowIdx, std::vector<int>& row, std::vector<int>& sequence) { return -1; }
+    
+    // This is called for FindMatrix search type
+    virtual void SearchAllRows(std::vector<int>& sequence, std::vector<int>& result) {}
     
     SearchType m_searchType;
 };
@@ -91,18 +96,18 @@ private:
 class SearchUnorderedOptimized : public SearchSequenceMapBase
 {
 public:
-    SearchUnorderedOptimized(std::vector<std::unordered_map<int, int> >& mapMatrix)
+    SearchUnorderedOptimized(MyMatrix *pMatrix)
     {
-        m_mapMatrix = mapMatrix;
-        m_searchType = FindMatchingRows;
+        m_searchType = FindMatrix;
+        m_pMatrix = pMatrix;
     };
     virtual ~SearchUnorderedOptimized() {};
     
     
 private:
-    int SearchRow(int rowIdx, std::vector<int>& row, std::vector<int>& sequence);
+    virtual void SearchAllRows(std::vector<int>& sequence, std::vector<int>& result);
     
-    std::vector<std::unordered_map<int, int> > m_mapMatrix;
+    MyMatrix *m_pMatrix;
 };
 
 class SearchBestMatchNaive : public SearchBase
@@ -136,7 +141,6 @@ private:
     
     std::vector<std::unordered_map<int, int> > m_mapMatrix;
 };
-
 
 
 #endif // _SEARCH_H_

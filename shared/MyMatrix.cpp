@@ -24,6 +24,7 @@ MyMatrix::~MyMatrix()
     if (m_pMatrix != NULL)
     {
         delete [] m_pMatrix;
+        m_pMatrix = NULL;
     }
 }
 
@@ -218,6 +219,30 @@ void MyMatrix::CreateMap()
     }
     
     //std::cout << "Created map\n";
+    
+    CreateMasterMap();
+}
+
+void MyMatrix::CreateMasterMap()
+{
+    
+    for (int i = 0; i < m_mapMatrix.size(); i++)
+    {
+        std::unordered_map<int,int>& mapRow = m_mapMatrix[i];
+        
+        for ( auto itVal = mapRow.begin(); itVal != mapRow.end(); ++itVal )
+        {
+            int value = itVal->first;
+            int count = itVal->second;
+            
+            for (int j = count; j > 0; j--)
+            {
+                m_mapMaster[value][j][i] = 1;
+            }
+            
+        }
+     
+    }
 }
 
 
