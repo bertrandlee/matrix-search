@@ -26,6 +26,8 @@ void SearchBase::SearchMatrix(std::vector<std::vector<int> >& matrix, std::vecto
     
     Preprocess(sequence);
     
+    clock_t time_b = clock();
+    
     if (m_searchType == FindMatrix)
     {
         SearchAllRows(sequence, result);
@@ -71,11 +73,11 @@ void SearchBase::SearchMatrix(std::vector<std::vector<int> >& matrix, std::vecto
         }
     }
 
-    clock_t time_b = clock();
+    clock_t time_c = clock();
     
     if (logtime)
     {
-        std::cout << caller << ": matrix search time = " << (time_b - time_a) << " us" << std::endl;
+        std::cout << caller << ": Preprocess time = " << (time_b - time_a) << " us, " << "Total matrix search time = " << (time_c - time_a) << " us" << std::endl;
     }
 
 }
@@ -366,11 +368,12 @@ int SearchBestMatchNaive::SearchRow(int rowIdx, std::vector<int>& row, std::vect
 int SearchBestMatchOptimized::SearchRow(int rowIdx, std::vector<int>& row, std::vector<int>& sequence)
 {
     std::unordered_map<int,int>& mapSeq = m_mapSeq;
+    std::vector<std::unordered_map<int, int> >& mapMatrix = m_pMatrix->GetMap();
     int matchCount = 0;
     
     for ( auto itSeq = mapSeq.begin(); itSeq != mapSeq.end(); ++itSeq )
     {
-        std::unordered_map<int,int>& rowMap = m_mapMatrix[rowIdx];
+        std::unordered_map<int,int>& rowMap = mapMatrix[rowIdx];
         
         auto itRow = rowMap.find(itSeq->first);
         

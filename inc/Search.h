@@ -129,9 +129,9 @@ private:
 class SearchBestMatchOptimized : public SearchSequenceMapBase
 {
 public:
-    SearchBestMatchOptimized(std::vector<std::unordered_map<int, int> >& mapMatrix)
+    SearchBestMatchOptimized(MyMatrix *pMatrix)
     {
-        m_mapMatrix = mapMatrix;
+        m_pMatrix = pMatrix;
         m_searchType = FindBestMatchRow;
     };
     virtual ~SearchBestMatchOptimized() {};
@@ -139,7 +139,7 @@ public:
 private:
     int SearchRow(int rowIdx, std::vector<int>& row, std::vector<int>& sequence);
     
-    std::vector<std::unordered_map<int, int> > m_mapMatrix;
+    MyMatrix *m_pMatrix;
 };
 
 

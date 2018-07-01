@@ -807,7 +807,7 @@ TEST_CASE( "SearchBestMatchOptimized Singleton Match", "[SearchBestMatchOptimize
     matrix.SetDimensions(1, 1);
     matrix.CreateWithSpecifiedValues("1");
     
-    SearchBestMatchOptimized search(matrix.GetMap());
+    SearchBestMatchOptimized search(&matrix);
     search.SearchMatrix(matrix.GetVectorMatrix(), sequence, result);
     REQUIRE(result == expected);
 }
@@ -821,7 +821,7 @@ TEST_CASE( "SearchBestMatchOptimized Singleton Match Negative", "[SearchBestMatc
     matrix.SetDimensions(1, 1);
     matrix.CreateWithSpecifiedValues("-1");
 
-    SearchBestMatchOptimized search(matrix.GetMap());
+    SearchBestMatchOptimized search(&matrix);
     search.SearchMatrix(matrix.GetVectorMatrix(), sequence, result);
     REQUIRE(result == expected);
 }
@@ -835,7 +835,7 @@ TEST_CASE( "SearchBestMatchOptimized Singleton NoMatch", "[SearchBestMatchOptimi
     matrix.SetDimensions(1, 1);
     matrix.CreateWithSpecifiedValues("1");
     
-    SearchBestMatchOptimized search(matrix.GetMap());
+    SearchBestMatchOptimized search(&matrix);
     search.SearchMatrix(matrix.GetVectorMatrix(), sequence, result);
     REQUIRE(result == expected);
 }
@@ -849,7 +849,7 @@ TEST_CASE( "SearchBestMatchOptimized Basic NoMatch 1", "[SearchBestMatchOptimize
     matrix.SetDimensions(2, 4);
     matrix.CreateWithSpecifiedValues("1,2,3,4,5,6,7,8");
 
-    SearchBestMatchOptimized search(matrix.GetMap());
+    SearchBestMatchOptimized search(&matrix);
     search.SearchMatrix(matrix.GetVectorMatrix(), sequence, result);
     REQUIRE(result == expected);
 }
@@ -863,7 +863,7 @@ TEST_CASE( "SearchBestMatchOptimized Basic NoMatch 2", "[SearchBestMatchOptimize
     matrix.SetDimensions(2, 4);
     matrix.CreateWithSpecifiedValues("1,2,3,4,5,6,7,8");
 
-    SearchBestMatchOptimized search(matrix.GetMap());
+    SearchBestMatchOptimized search(&matrix);
     search.SearchMatrix(matrix.GetVectorMatrix(), sequence, result);
     REQUIRE(result == expected);
 }
@@ -877,7 +877,7 @@ TEST_CASE( "SearchBestMatchOptimized Basic Match SingleSeq 1", "[SearchBestMatch
     matrix.SetDimensions(2, 4);
     matrix.CreateWithSpecifiedValues("1,2,3,4,5,6,7,8");
 
-    SearchBestMatchOptimized search(matrix.GetMap());
+    SearchBestMatchOptimized search(&matrix);
     search.SearchMatrix(matrix.GetVectorMatrix(), sequence, result);
     REQUIRE(result == expected);
 }
@@ -891,7 +891,7 @@ TEST_CASE( "SearchBestMatchOptimized Basic Match SingleSeq 2", "[SearchBestMatch
     matrix.SetDimensions(2, 4);
     matrix.CreateWithSpecifiedValues("1,2,3,4,5,6,7,8");
 
-    SearchBestMatchOptimized search(matrix.GetMap());
+    SearchBestMatchOptimized search(&matrix);
     search.SearchMatrix(matrix.GetVectorMatrix(), sequence, result);
     REQUIRE(result == expected);
 }
@@ -905,7 +905,7 @@ TEST_CASE( "SearchBestMatchOptimized Basic Match DoubleSeq 1", "[SearchBestMatch
     matrix.SetDimensions(2, 4);
     matrix.CreateWithSpecifiedValues("1,2,3,4,5,6,7,8");
 
-    SearchBestMatchOptimized search(matrix.GetMap());
+    SearchBestMatchOptimized search(&matrix);
     search.SearchMatrix(matrix.GetVectorMatrix(), sequence, result);
     REQUIRE(result == expected);
 }
@@ -919,7 +919,7 @@ TEST_CASE( "SearchBestMatchOptimized Basic Match DoubleSeq 2", "[SearchBestMatch
     matrix.SetDimensions(2, 4);
     matrix.CreateWithSpecifiedValues("1,2,3,4,5,6,7,8");
     
-    SearchBestMatchOptimized search(matrix.GetMap());
+    SearchBestMatchOptimized search(&matrix);
     search.SearchMatrix(matrix.GetVectorMatrix(), sequence, result);
     REQUIRE(result == expected);
 }
@@ -933,7 +933,7 @@ TEST_CASE( "SearchBestMatchOptimized Basic Match DoubleSeq 3", "[SearchBestMatch
     matrix.SetDimensions(2, 4);
     matrix.CreateWithSpecifiedValues("1,2,3,4,5,6,7,8");
     
-    SearchBestMatchOptimized search(matrix.GetMap());
+    SearchBestMatchOptimized search(&matrix);
     search.SearchMatrix(matrix.GetVectorMatrix(), sequence, result);
     REQUIRE(result == expected);
 }
@@ -947,7 +947,7 @@ TEST_CASE( "SearchBestMatchOptimized Basic Match DoubleSeq 4", "[SearchBestMatch
     matrix.SetDimensions(2, 4);
     matrix.CreateWithSpecifiedValues("1,2,3,4,5,6,7,8");
 
-    SearchBestMatchOptimized search(matrix.GetMap());
+    SearchBestMatchOptimized search(&matrix);
     search.SearchMatrix(matrix.GetVectorMatrix(), sequence, result);
     REQUIRE(result == expected);
 }
@@ -962,7 +962,7 @@ TEST_CASE( "SearchBestMatchOptimized Basic MultiMatch 1", "[SearchBestMatchOptim
     matrix.SetDimensions(2, 4);
     matrix.CreateWithSpecifiedValues("1,2,3,4,5,6,3,4");
 
-    SearchBestMatchOptimized search(matrix.GetMap());
+    SearchBestMatchOptimized search(&matrix);
     search.SearchMatrix(matrix.GetVectorMatrix(), sequence, result);
     REQUIRE(result == expected);
 }
@@ -976,7 +976,7 @@ TEST_CASE( "SearchBestMatchOptimized Basic MultiMatch 2", "[SearchBestMatchOptim
     matrix.SetDimensions(2, 4);
     matrix.CreateWithSpecifiedValues("1,2,3,4,5,6,3,4");
     
-    SearchBestMatchOptimized search(matrix.GetMap());
+    SearchBestMatchOptimized search(&matrix);
     search.SearchMatrix(matrix.GetVectorMatrix(), sequence, result);
     REQUIRE(result == expected);
 }
@@ -990,7 +990,7 @@ TEST_CASE( "SearchBestMatchOptimized Basic MultiMatch 3", "[SearchBestMatchOptim
     matrix.SetDimensions(2, 4);
     matrix.CreateWithSpecifiedValues("1,2,3,4,5,6,3,4");
     
-    SearchBestMatchOptimized search(matrix.GetMap());
+    SearchBestMatchOptimized search(&matrix);
     search.SearchMatrix(matrix.GetVectorMatrix(), sequence, result);
     REQUIRE(result == expected);
 }
@@ -1004,7 +1004,7 @@ TEST_CASE( "SearchBestMatchOptimized Basic RepeatMatch 1", "[SearchBestMatchOpti
     matrix.SetDimensions(2, 6);
     matrix.CreateWithSpecifiedValues("1,2,9,9,3,4,1,2,9,9,2,4");
     
-    SearchBestMatchOptimized search(matrix.GetMap());
+    SearchBestMatchOptimized search(&matrix);
     search.SearchMatrix(matrix.GetVectorMatrix(), sequence, result);
     REQUIRE(result == expected);
 }
@@ -1018,7 +1018,7 @@ TEST_CASE( "SearchBestMatchOptimized Basic RepeatMatch 2", "[SearchBestMatchOpti
     matrix.SetDimensions(2, 6);
     matrix.CreateWithSpecifiedValues("1,2,9,9,2,4,1,2,9,9,3,4");
     
-    SearchBestMatchOptimized search(matrix.GetMap());
+    SearchBestMatchOptimized search(&matrix);
     search.SearchMatrix(matrix.GetVectorMatrix(), sequence, result);
     REQUIRE(result == expected);
 }
@@ -1032,7 +1032,7 @@ TEST_CASE( "SearchBestMatchOptimized Basic RepeatMatch 3", "[SearchBestMatchOpti
     matrix.SetDimensions(2, 6);
     matrix.CreateWithSpecifiedValues("1,2,9,9,9,4,1,9,9,9,3,4");
 
-    SearchBestMatchOptimized search(matrix.GetMap());
+    SearchBestMatchOptimized search(&matrix);
     search.SearchMatrix(matrix.GetVectorMatrix(), sequence, result);
     REQUIRE(result == expected);
 }
@@ -1046,7 +1046,7 @@ TEST_CASE( "SearchBestMatchOptimized Basic RepeatMatch 4", "[SearchBestMatchOpti
     matrix.SetDimensions(2, 6);
     matrix.CreateWithSpecifiedValues("1,2,9,9,9,4,1,2,2,9,3,4");
     
-    SearchBestMatchOptimized search(matrix.GetMap());
+    SearchBestMatchOptimized search(&matrix);
     search.SearchMatrix(matrix.GetVectorMatrix(), sequence, result);
     REQUIRE(result == expected);
 }
@@ -1060,7 +1060,7 @@ TEST_CASE( "SearchBestMatchOptimized Basic RepeatMatch 5", "[SearchBestMatchOpti
     matrix.SetDimensions(2, 6);
     matrix.CreateWithSpecifiedValues("1,2,4,9,2,2,1,2,2,9,3,4");
 
-    SearchBestMatchOptimized search(matrix.GetMap());
+    SearchBestMatchOptimized search(&matrix);
     search.SearchMatrix(matrix.GetVectorMatrix(), sequence, result);
     REQUIRE(result == expected);
 }
@@ -1074,7 +1074,7 @@ TEST_CASE( "SearchBestMatchOptimized Basic RepeatMatch 6", "[SearchBestMatchOpti
     matrix.SetDimensions(2, 6);
     matrix.CreateWithSpecifiedValues("1,2,4,9,2,2,1,2,2,2,3,4");
     
-    SearchBestMatchOptimized search(matrix.GetMap());
+    SearchBestMatchOptimized search(&matrix);
     search.SearchMatrix(matrix.GetVectorMatrix(), sequence, result);
     REQUIRE(result == expected);
 }
@@ -1092,7 +1092,7 @@ TEST_CASE( "SearchBestMatchOptimized Basic MultipleCalls", "[SearchBestMatchOpti
     matrix.SetDimensions(4, 4);
     matrix.CreateWithSpecifiedValues("1,2,3,2,5,6,3,2,9,10,2,3,2,3,2,2");
     
-    SearchBestMatchOptimized search(matrix.GetMap());
+    SearchBestMatchOptimized search(&matrix);
     search.SearchMatrix(matrix.GetVectorMatrix(), sequence1, result);
     REQUIRE(result == expected1);
     search.SearchMatrix(matrix.GetVectorMatrix(), sequence1, result);
@@ -1501,11 +1501,11 @@ TEST_CASE( "SearchBestMatchNaive Stress NoMatch", "[SearchBestMatchNaive]" ) {
 // SearchBestMatchOptimized stress tests
 
 TEST_CASE( "SearchBestMatchOptimized Stress Match", "[SearchBestMatchOptimized]" ) {
-    std::vector<int> sequence = {MAX_DIM, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20};
+    std::vector<int> sequence = {MAX_DIM, MAX_DIM+1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20};
     std::vector<int> expected = {1};
     std::vector<int> result;
     
-    SearchBestMatchOptimized search(g_myMatrix1.GetMap());
+    SearchBestMatchOptimized search(&g_myMatrix1);
     search.SearchMatrix(g_matrix1, sequence, result, true, "SearchBestMatchOptimized");
     REQUIRE(result == expected);
 }
@@ -1515,7 +1515,7 @@ TEST_CASE( "SearchBestMatchOptimized Stress NoMatch", "[SearchBestMatchOptimized
     std::vector<int> expected = {};
     std::vector<int> result;
     
-    SearchBestMatchOptimized search(g_myMatrix1.GetMap());
+    SearchBestMatchOptimized search(&g_myMatrix1);
     search.SearchMatrix(g_matrix1, sequence, result, true, "SearchBestMatchOptimized");
     REQUIRE(result == expected);
 }

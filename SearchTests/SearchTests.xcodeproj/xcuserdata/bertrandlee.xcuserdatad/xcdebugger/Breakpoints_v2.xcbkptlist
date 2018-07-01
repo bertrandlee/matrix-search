@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../shared/Search.cpp"
-            timestampString = "552114377.557356"
+            timestampString = "552123172.737938"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "420"
-            endingLineNumber = "420">
+            startingLineNumber = "395"
+            endingLineNumber = "395">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -88,11 +88,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../shared/Search.cpp"
-            timestampString = "552114377.557356"
+            timestampString = "552123172.737938"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "202"
-            endingLineNumber = "202">
+            startingLineNumber = "204"
+            endingLineNumber = "204">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -102,11 +102,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../shared/Search.cpp"
-            timestampString = "552114377.557356"
+            timestampString = "552123172.737938"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "175"
-            endingLineNumber = "175"
+            startingLineNumber = "177"
+            endingLineNumber = "177"
             landmarkName = "SearchSequenceOptimized::SearchRow(int rowIdx, std::vector&lt;int&gt;&amp; row, std::vector&lt;int&gt;&amp; sequence)"
             landmarkType = "7">
          </BreakpointContent>
@@ -188,6 +188,22 @@
             startingLineNumber = "937"
             endingLineNumber = "937"
             landmarkName = "TEST_CASE( &quot;SearchBestMatchOptimized Basic Match DoubleSeq 3&quot;, &quot;[SearchBestMatchOptimized]&quot; )"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SearchTests/SearchTests.cpp"
+            timestampString = "552123166.371774"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1519"
+            endingLineNumber = "1519"
+            landmarkName = "TEST_CASE( &quot;SearchBestMatchOptimized Stress NoMatch&quot;, &quot;[SearchBestMatchOptimized]&quot; )"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>

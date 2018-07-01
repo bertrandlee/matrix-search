@@ -43,7 +43,7 @@ public:
         
         m_pSearchSequence = new SearchSequenceOptimized();
         m_pSearchUnordered = new SearchUnorderedOptimized(&m_matrix);
-        m_pSearchBestMatch = new SearchBestMatchOptimized(m_matrix.GetMap());
+        m_pSearchBestMatch = new SearchBestMatchOptimized(&m_matrix);
     }
     
     void ParseConsole()
